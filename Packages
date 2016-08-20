@@ -1,0 +1,14 @@
+Package: com.YungRaj.streaknotify
+Name: StreakNotify
+Version: 2.0.1
+Section: Tweaks
+Author: Ilhan Raja
+Maintainer: Ilhan Raja
+Depends: mobilesubstrate, com.rpetrich.rocketbootstrap (>= 1.0.2) | firmware (<< 7.0)
+Architecture: iphoneos-arm
+Filename: ./com.YungRaj.streaknotify_2.0.1_iphoneos-arm.deb
+Size: 102432
+MD5sum: a4a16ae0b93404e3baad413aacfc6135
+SHA1: 6bec059c7ca8a357792a22431685418d51d26139
+SHA256: 36597335aee41a676e206e547c6b949488bbbb737e830a606d8e4e365d02b337
+Description: Take snapchat streaks seriously? Make sure you know how much time you have left to respond with notifications! On your feed there will be a label that tells you how much time is remaining to keep the streak going
