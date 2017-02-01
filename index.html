@@ -25,19 +25,63 @@
           <h1>YungRaj's blog 🔥</h1>
           <h5>Security, reverse engineering, firmware and machine research</h5>
           <hr>
-          <span class="credits left">A blog by <a href="https://github.com/YungRaj">YungRaj</a></span>
+          <span class="credits left">A blog by <a href="https://github.com/YungRaj">YungRaj</a>&emsp;<a href="https://twitter.com/ilhanraja">@ilhanraja</a></span>
           <span class="credits right">This site is released under the terms of the MIT license.</span>
         </div>
 
         <p>This is currently my blog for future research for iOS, macOS, UEFI, and many more platforms. It also a host to my MobileSubstrate tweaks that are also available on Cydia and other software projects on github</p>
         <h3>About me</h3>
         <p>I am a student at TAMU in College Station, Texas. I know C, C++, Objective C, Swift, Java, x86/ARM ASM and even some ACPI Machine Language. I have been interested with iOS/macOS and UEFI/BIOS software development since high school and am now going to document my research for people to readily be able to learn. Email me at ilhan.raja@icloud.com if you have any questions. Here is a link to my <a href="https://github.com/YungRaj/YungRaj.github.io/raw/master/_site/Resume.pdf"> Resume</a><p>
-        <h4>StreakNotify</h4>
+        <h4>Method Hooking</h4>
+        <span style="color:orange;">01-31-2017</span>
+        <p>So you're writing tweaks for iOS and wanted to understand more what is being done? What you're about to find is a concise, detailed explanation about what is going on under the hood when hooking into software during runtime. Previous experience with Objective C is required.<br></p>
+        <span style="color:orange;">The Objective C Runtime</span>
+            <br>&emsp;&emsp;&emsp;Objective C is the primary language that Apple uses for application development in the userspace. It is an object oriented language and runtime written in C. It has been used for years ever since the inception of NextStep, later acquired by (you'd never figure this out) Apple, where the standard frameworks originated from.<br>
+                &emsp;&emsp;&emsp;Although Swift is growing more popular, its runtime libraries are still not locally stored on the filesystem and end up having to be packaged into the app bundle (remaining dynamically linked) of an application that depends on code written in Swift. I'm not sure why Apple does this, my original assumption is that the ABI support is not fully complete. In addition, Swift has to rely on the frameworks and libraries that were written in Objective C. So least for now, Objective C remains strong.<br>
+                &emsp;&emsp;&emsp;Anyway, the magical part about Objective C seems to be that it supports something called reflection, which is the ability for computer program to introspect, examine, and even modify the internal structures and behavior during runtime. Although one might feel this is a super large strength of Objective C, a person, given the security mitigations within iOS/macOS, can not take realistically take advantage of such language features effectively without fundamental changes. The changes described are for another post. <br>
+                &emsp;&emsp;&emsp;As far as reflection goes, let's take a look at the runtime headers of the Objective C runtime library, which is dynamically linked into a Mach-O binary everytime an app depends on Objective C code. In objc/runtime.h and objc/objc.h,
+                <pre>
+struct objc_class {
+    Class isa  OBJC_ISA_AVAILABILITY;
+#if !__OBJC2__
+    Class super_class
+    const char *name
+    long version                                             OBJC2_UNAVAILABLE;
+    long info                                                OBJC2_UNAVAILABLE;
+    long instance_size                                       OBJC2_UNAVAILABLE;
+    struct objc_ivar_list *ivars                             OBJC2_UNAVAILABLE;
+    struct objc_method_list **methodLists                    OBJC2_UNAVAILABLE;
+    struct objc_cache *cache                                 OBJC2_UNAVAILABLE;
+    struct objc_protocol_list *protocols                     OBJC2_UNAVAILABLE;
+#endif
+} OBJC2_UNAVAILABLE;
+                </pre>
+                &emsp;&emsp;&emsp;We find that an objc_class is a structure of many different fields that basically define the abstract concept of a class. From basic programming experience, a Class conceptually should have a super class, a way to identify the type of class (in this case it is by string), instance variables, methods, etc. Protocols may not be familiar to non-objective c developers, but they are just an added language feature that is well documented.
+                    <pre>
+#if !OBJC_TYPES_DEFINED
+/// An opaque type that represents an Objective-C class.
+typedef struct objc_class *Class;
+/// Represents an instance of a class. </pre>
+                &emsp;&emsp;&emsp;If you happen to be confused as to what the predefined type Class was, it just happens to be typedef to a pointer to objc_class type. This would be important since we don't have to copy data over and over if it happens to change during runtime (which would be the case since objc supports reflection) or when passing data through methods/functions.
+                    <pre>
+struct objc_object {
+    Class isa  OBJC_ISA_AVAILABILITY;
+};
+/// A pointer to an instance of a class.
+typedef struct objc_object *id;
+#endif
+/* Use `Class` instead of `struct objc_class *` */
+</pre>
+                &emsp;&emsp;&emsp;And astoundingly, the only field of the objc_object structure is just a pointer to an instance of a Class. We also find that id, a widely used keyword, is also defined which is just typedef to a pointer to a valid Objective C object (or nil).<br><br>
+                &emsp;&emsp;&emsp;Objective C happens to use something called a metaclass system, which, in short, basically defines a mutual relationship between objects and classes. Classes are objects, and objects are instances of classes. This means that we can send messages to both a class and an object.<br>
+                &emsp;&emsp;&emsp;To better explain this, a good example would be the NSString class. [NSString stringWithFormat:] is a class method call that returns a pointer to an NSString. NSString is of type Class, and is an object too because a message can be passed to it (the selector stringWithFormat:). Conversely, the pointer to an NSString* object that is returned from that class method call at the fundamental level is just an instance of a Class. This is the case because a pointer to an id (pointer to any Objective C object) has only one member, what is known as the isa pointer (of type Class or objc_class*).
+        </p>
+        <h5>StreakNotify</h5>
         <span style="color:orange;">01-10-2017</span>
-        <p>I recented talked to CokePokes about the recent changes within Snapchat with regards to DRM, and concluded that the best solution for allowing compatability with Phantom is to include my code within the Phantom project. I will remain the maintainer of my code, however I will be collaborating with CokePokes to update StreakNotify/Phantom to combat Snapchat's DRM. BUT, if you only want to install StreakNotify alone, you can since it by itself does not activate Snapchat's DRM. To install my tweak through BigBoss on Cydia, use this link <a href="http://cydia.saurik.com/package/com.yungraj.streaknotify/"> link</a> I will still be pushing updates to this tweak for the newest versions and doing the best I can to add more features/fix bugs. If you have any questions, you can email me.</p>
+        <p>I recented talked to CokePokes about the recent changes within Snapchat with regards to DRM, and concluded that the best solution for allowing compatibility with Phantom is to include my code within the Phantom project. I will remain the maintainer of my code, however I will be collaborating with CokePokes to update StreakNotify/Phantom to combat Snapchat's DRM. BUT, if you only want to install StreakNotify alone, you can since it by itself does not activate Snapchat's DRM. To install my tweak through BigBoss on Cydia, use this <a href="http://cydia.saurik.com/package/com.yungraj.streaknotify/"> link.</a> I will still be pushing updates to this tweak for the newest versions and doing the best I can to add more features/fix bugs. If you have any questions, you can email me.</p>
         
-        <h4>First post</h4>
-        <p>Thank you so much for taking a look at my blog. As I do research I will document my findings about the Objective C/Swift Runtime under the hood, XNU/Darwin, EFI/UEFI, and news in the jailbreak/security community and OSX86. Stay tuned. If you feel inclined to contribute, please let me know and I'll be more than willing to accept help.</p>
+        <h6>First post</h6>
+        <p>I appreciate the time taken to look at the work that I've been doing. As I do research I will document my findings about the Objective C/Swift Runtime under the hood, XNU/Darwin, EFI/UEFI, and much more.</p>
 
     <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
   </body>
