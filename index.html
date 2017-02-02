@@ -62,7 +62,7 @@ struct objc_class {
 /// An opaque type that represents an Objective-C class.
 typedef struct objc_class *Class;
 /// Represents an instance of a class. </pre>
-                &emsp;&emsp;&emsp;If you happen to be confused as to what the predefined type Class was, it just happens to be typedef to a pointer to objc_class type. This would be important since we don't have to copy data over and over if it happens to change during runtime (which would be the case since objc supports reflection) or when passing data through methods/functions.
+                &emsp;&emsp;&emsp;If you happen to be confused as to what the predefined type Class was, it is typedef to a pointer to an objc_class type. This would be important since we don't have to copy data over and over if it happens to change during runtime (which would be the case since objc supports reflection) or when passing objects as parameters to methods/functions.
                     <pre>
 struct objc_object {
     Class isa  OBJC_ISA_AVAILABILITY;
@@ -72,10 +72,135 @@ typedef struct objc_object *id;
 #endif
 /* Use `Class` instead of `struct objc_class *` */
 </pre>
-                &emsp;&emsp;&emsp;And astoundingly, the only field of the objc_object structure is just a pointer to an instance of a Class. We also find that id, a widely used keyword, is also defined which is just typedef to a pointer to a valid Objective C object (or nil).<br><br>
+                &emsp;&emsp;&emsp;And astoundingly, the only field of the objc_object structure is just a pointer to an instance of a Class. We also find that id, a widely used keyword, is also defined which is just typedef to a pointer to a objc_object (or nil).<br><br>
                 &emsp;&emsp;&emsp;Objective C happens to use something called a metaclass system, which, in short, basically defines a mutual relationship between objects and classes. Classes are objects, and objects are instances of classes. This means that we can send messages to both a class and an object.<br>
-                &emsp;&emsp;&emsp;To better explain this, a good example would be the NSString class. [NSString stringWithFormat:] is a class method call that returns a pointer to an NSString. NSString is of type Class, and is an object too because a message can be passed to it (the selector stringWithFormat:). Conversely, the pointer to an NSString* object that is returned from that class method call at the fundamental level is just an instance of a Class. This is the case because a pointer to an id (pointer to any Objective C object) has only one member, what is known as the isa pointer (of type Class or objc_class*).
+                &emsp;&emsp;&emsp;To better explain this, a good example would be the NSString class. <br>
+                &emsp;&emsp;&emsp;[NSString stringWithFormat:] is a class method call that returns a pointer to an NSString. NSString is of type Class, and is an object too because a message can be passed to it (the selector stringWithFormat:). Conversely, the pointer to an NSString* object that is returned from that class method call at a lower level is an instance of a Class. This is the case because a pointer to an id (pointer to any Objective C object) has only one member, what is known as the isa pointer (of type Class or objc_class*).
         </p>
+        <pre>
+struct objc_category {
+    char *category_name                                      OBJC2_UNAVAILABLE;
+    char *class_name                                         OBJC2_UNAVAILABLE;
+    struct objc_method_list *instance_methods                OBJC2_UNAVAILABLE;
+    struct objc_method_list *class_methods                   OBJC2_UNAVAILABLE;
+    struct objc_protocol_list *protocols                     OBJC2_UNAVAILABLE;
+}                                                            OBJC2_UNAVAILABLE;
+            
+struct objc_ivar {
+    char *ivar_name                                          OBJC2_UNAVAILABLE;
+    char *ivar_type                                          OBJC2_UNAVAILABLE;
+    int ivar_offset                                          OBJC2_UNAVAILABLE;
+#ifdef __LP64__
+    int space                                                OBJC2_UNAVAILABLE;
+#endif
+}                                                            OBJC2_UNAVAILABLE;
+            
+struct objc_method {
+    SEL method_name                                          OBJC2_UNAVAILABLE;
+    char *method_types                                       OBJC2_UNAVAILABLE;
+    IMP method_imp                                           OBJC2_UNAVAILABLE;
+}
+
+/// An opaque type that represents a method selector.
+typedef struct objc_selector *SEL;
+
+/// A pointer to the function of a method implementation.
+#if !OBJC_OLD_DISPATCH_PROTOTYPES
+typedef void (*IMP)(void /* id, SEL, ... */ );
+#else
+typedef id (*IMP)(id, SEL, ...);
+#endif
+</pre>
+        &emsp;&emsp;&emsp;And here we find more definitions of objc categories, ivars, methods, selectors and IMPs (implementation [basically a function pointer]).
+        <br>
+        <br>
+        &emsp;&emsp;&emsp;You might ask, "why is knowing this important?". Well firstly, this sets up your knowledge of the Objective C runtime. After understanding the basic types within the runtime, I can then explain how reflection works.
+        <br>
+        &emsp;&emsp;&emsp;So now you know the underlying data structures that make up the runtime. But how are they used?<br>
+        &emsp;&emsp;&emsp;The runtime includes many functions that create and modify these intrinsic structures. A list is shown below.
+        <pre>
+Classes
+    class_getName
+    class_getSuperclass
+    class_isMetaClass
+    class_getInstanceSize
+    class_getInstanceVariable
+    class_getClassVariable
+    class_addIvar
+    class_copyIvarList
+    class_getIvarLayout
+    class_setIvarLayout
+    class_getWeakIvarLayout
+    class_setWeakIvarLayout
+    class_getProperty
+    class_copyPropertyList
+    class_addMethod
+    class_getInstanceMethod
+    class_getClassMethod
+    class_copyMethodList
+    class_replaceMethod
+    class_getMethodImplementation
+    class_getMethodImplementation_stret
+    class_respondsToSelector
+    class_addProtocol
+    class_addProperty
+    class_replaceProperty
+    class_conformsToProtocol
+    class_copyProtocolList
+            
+Adding Classes during Runtime
+    objc_allocateClassPair
+    objc_disposeClassPair
+    objc_registerClassPair
+    objc_duplicateClass
+            
+Creating Classes
+    class_createInstance
+    objc_constructInstance.
+    objc_destructInstance
+            
+Instances
+    object_copy
+    object_dispose
+    object_setInstanceVariable
+    object_getInstanceVariable
+    object_getIndexedIvars
+    object_getIvar
+    object_setIvar
+    object_getClassName
+    object_getClass
+    object_setClass
+
+Classes (cont’d)
+    objc_getClassList
+    objc_copyClassList
+    objc_lookUpClass
+    objc_getClass.
+    objc_getRequiredClass
+    objc_getMetaClass
+    
+Message Sending
+    objc_msgSend
+    objc_msgSend_fpret
+    objc_msgSend_stret
+    objc_msgSendSuper
+    objc_msgSendSuper_stret
+
+Methods
+    method_invoke
+    method_invoke_stret
+    method_getName
+    method_getImplementation
+    method_getTypeEncoding
+    method_copyReturnType
+    method_copyArgumentType
+    method_getReturnType
+    method_getNumberOfArguments
+    method_getArgumentType
+    method_getDescription
+    method_setImplementation
+    method_exchangeImplementations
+</pre>
         <h5>StreakNotify</h5>
         <span style="color:orange;">01-10-2017</span>
         <p>I recented talked to CokePokes about the recent changes within Snapchat with regards to DRM, and concluded that the best solution for allowing compatibility with Phantom is to include my code within the Phantom project. I will remain the maintainer of my code, however I will be collaborating with CokePokes to update StreakNotify/Phantom to combat Snapchat's DRM. BUT, if you only want to install StreakNotify alone, you can since it by itself does not activate Snapchat's DRM. To install my tweak through BigBoss on Cydia, use this <a href="http://cydia.saurik.com/package/com.yungraj.streaknotify/"> link.</a> I will still be pushing updates to this tweak for the newest versions and doing the best I can to add more features/fix bugs. If you have any questions, you can email me.</p>
