@@ -154,7 +154,7 @@ Adding Classes during Runtime
     objc_registerClassPair
     objc_duplicateClass
             
-Creating Classes
+Creating Instances of Classes
     class_createInstance
     objc_constructInstance.
     objc_destructInstance
@@ -201,6 +201,31 @@ Methods
     method_setImplementation
     method_exchangeImplementations
 </pre>
+        &emsp;&emsp;&emsp;With any of these functions, the runtime is able to perform the underlying behavior that the normal developer doesn't have to worry about in their process. There are more functions to the runtime not documented in this post, but these are the most relevant to reflection and method hooking. Now let's talk about some noteworthy functions that are important to us. <br>
+        &emsp;&emsp;&emsp;id objc_msgSend(id self, SEL op, ...) and its counterparts send a message to an instance of a class. Method dispatching works a little differently in Objective C in comparison to other languages such as C++, Java and even Swift, which use virtual function tables to find the right method to jump to. The way that Objective C handles method dispatching is by using the meta-class structure (the isa pointer) to find the right selector and arguments. objc_msgSend starts where self points to (an id.. i.e. a pointer to an objc_object) and looks inside the isa pointer if it contains the right method in the method list. If it doesn't, it looks within the superclass, which is another type of Class in memory. If it goes through the whole class hierarchy and does not find a method that is dispatchable, the program aborts (usually an EXC_CRASH SIGABRT [unix signal abort]) and the operating system is forced to recover from it via an exception. When I discuss exceptions, traps, and interrupts in XNU, you'd able to know how that works in a much deeper level. But for now, let's stay on topic. <br>
+        &emsp;&emsp;&emsp; The functions prefixed with class_ generally perform operations on classes or retrieves data from them. They are self explanatory and will be implemented in code samples in a future portion of this post, and this should clarify in detail about how they work. <br>
+        &emsp;&emsp;&emsp;During runtime, you can even manually create classes and construct instances of them without the formal syntax that Objective C uses. Those are depicted by the sections "Adding Classes during Runtime" and "Creating Instances of Classes". <br>
+        &emsp;&emsp;&emsp;objc_getClass returns the type of class that you would like during runtime. If the class you're querying is local to the process you're trying to use, then this syntax generally isn't needed. In special cases like writing tweaks and hooking into classes in a separate process via MobileSubstrate, you'll find a need for these functions. Below is an example of basic retrieval of Classes during runtime. <br>
+        <pre>
+// retrieval of Classes via objc_getClassList
+int numClasses;
+Class *classes = NULL;
+// first get the number of classes so we can dynamically allocate a pointer to them
+numClasses = objc_getClassList(NULL, 0);
+
+if (numClasses > 0 ){
+    // allocate a pointer to all the Classes using the numClasses variable
+    classes = (__unsafe_unretained Class *)malloc(sizeof(Class) * numClasses);
+    // get them and store them into the classes pointer
+    numClasses = objc_getClassList(classes, numClasses);
+    for (int i = 0; i < numClasses; i++) {
+        // print the name of the class via class_getName
+        NSLog(@"Class name: %s", class_getName(classes[i]));
+    }
+    free(classes);
+}
+        </pre>
+        &emsp;&emsp;&emsp;The section for Methods is self explanatory. Code samples would better depict the usage of these functions so stay tuned. <br>
         <h5>StreakNotify</h5>
         <span style="color:orange;">01-10-2017</span>
         <p>I recented talked to CokePokes about the recent changes within Snapchat with regards to DRM, and concluded that the best solution for allowing compatibility with Phantom is to include my code within the Phantom project. I will remain the maintainer of my code, however I will be collaborating with CokePokes to update StreakNotify/Phantom to combat Snapchat's DRM. BUT, if you only want to install StreakNotify alone, you can since it by itself does not activate Snapchat's DRM. To install my tweak through BigBoss on Cydia, use this <a href="http://cydia.saurik.com/package/com.yungraj.streaknotify/"> link.</a> I will still be pushing updates to this tweak for the newest versions and doing the best I can to add more features/fix bugs. If you have any questions, you can email me.</p>
