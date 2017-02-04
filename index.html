@@ -38,7 +38,7 @@
         <span style="color:orange;">The Objective C Runtime</span>
             <br>&emsp;&emsp;&emsp;Objective C is the primary language that Apple uses for application development in the userspace. It is an object oriented language and runtime written in C. It has been used for years ever since the inception of NextStep, later acquired by (you'd never figure this out) Apple, where the standard frameworks originated from.<br>
                 &emsp;&emsp;&emsp;Although Swift is growing more popular, its runtime libraries are still not locally stored on the filesystem and end up having to be packaged into the app bundle (remaining dynamically linked) of an application that depends on code written in Swift. I'm not sure why Apple does this, my original assumption is that the ABI support is not fully complete. In addition, Swift has to rely on the frameworks and libraries that were written in Objective C. So least for now, Objective C remains strong.<br>
-                &emsp;&emsp;&emsp;Anyway, the magical part about Objective C seems to be that it supports something called reflection, which is the ability for computer program to introspect, examine, and even modify the internal structures and behavior during runtime. Although one might feel this is a super large strength of Objective C, a person, given the security mitigations within iOS/macOS, can not take realistically take advantage of such language features effectively without fundamental changes. The changes described are for another post. <br>
+                &emsp;&emsp;&emsp;Anyway, the magical part about Objective C seems to be that it supports something called reflection, which is the ability for computer program to introspect, examine, and even modify the internal structures and behavior during runtime. Although one might feel this is a super large strength of Objective C, a person, given the security mitigations within iOS/macOS, can not take realistically take advantage of such language features effectively outside the scope of an application's address space without a security flaw in the OS. These vulnerabilities described are for another post. <br>
                 &emsp;&emsp;&emsp;As far as reflection goes, let's take a look at the runtime headers of the Objective C runtime library, which is dynamically linked into a Mach-O binary everytime an app depends on Objective C code. In objc/runtime.h and objc/objc.h,
                 <pre><code>
 struct objc_class {
@@ -227,7 +227,69 @@ if (numClasses > 0 ){
 }
         <br></pre></code>
         &emsp;&emsp;&emsp;As shown in this simple example, this is one of the super flexible things about Objective C. The runtime is composed of fancy functions and data structures that happen to be super useful for developers. <br><br>
-        As far as the Objective C runtime goes, this is as in detail I'm going to go into for length purposes. Explaining every single crevice and crack of the runtime would be much too long for one post. Most of the intricacies that are outside the scope of this document are most likely on <a href="http://developer.apple.com">Apple's developer portal</a>. I managed to hit the high notes of what a person should know if they are interested in reverse engineering iOS.
+        As far as the Objective C runtime goes, this is as in detail I'm going to go into for length purposes. Explaining every single crevice and crack of the runtime would be much too long for one post. Most of the intricacies that are outside the scope of this document are most likely on <a href="http://developer.apple.com">Apple's developer portal</a>. I managed to hit the high notes of what a person should know if they are interested in reverse engineering iOS. <br><br>
+        <span style="color:orange;">Method Swizzling and Mobile Substrate</span><br>
+        &emsp;&emsp;&emsp;MobileSubstrate is a framework provided on jailbroken devices that allows developers to provide patches to system functions at the assembly level and to the internal structures of classes and method implementations in Objective C applications. It was written originally by saurik, a familiar member of the jailbreak community that created Cydia, the alternative AppStore which actually happens to be a frontend to apt, a package manager that ships on some Linux distributions. <br>
+        &emsp;&emsp;&emsp;With regards to hooking methods and providing on the fly patches during runtime, MobileSubstrate takes advantage of something that the objective c runtime allows developers to perform, something called method swizzling. Method swizzling is a process of manipulating the implementation of an existing selector in a class. Based on the objc_class structure that we reviewed before, we can see that method swizzling basically modifies the dispatch table (the methodLists field). An example of method swizzling within a class is shown below. <br>
+        <pre><code>
+@implementation UIViewController (Swizzling)
+            
++(void)load {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        Class class = [self class];
+            
+        SEL originalSelector = @selector(viewDidLoad:);
+        SEL swizzledSelector = @selector(swizzled_viewDidLoad:);
+            
+        Method originalMethod = class_getInstanceMethod(class,originalSelector);
+        Method swizzledMethod = class_getInstanceMethod(class,swizzledSelector);
+            
+        // This is for swizzling class methods
+        // Class class = object_getClass((id)self);
+        // Method originalMethod = class_getClassMethod(class,originalSelector);
+        // Method swizzledMethod = class_getClassMethod(class,swizzledSelector);
+            
+        BOOL didAddMethod = class_addMethod(class,
+                                            originalSelector,
+                                            method_getImplementation(swizzledMethod),
+                                            method_getTypeEncoding(swizzledMethod));
+            
+        if (didAddMethod) {
+            class_replaceMethod(class,swizzledSelector,method_getImplementation(originalMethod),method_getTypeEncoding(originalMethod));
+        } else {
+            method_exchangeImplementations(originalMethod,swizzledMethod);
+        }
+    });
+}
+
+-(void)swizzled_viewDidLoad {
+    [self swizzled_viewDidLoad];
+    NSLog(@"viewDidLoad %@", self);
+}
+            
+@end
+        <br></pre></code>
+        &emsp;&emsp;&emsp;One thing you might notice in swizzled_viewDidLoad is that it seemingly makes a recursive call to itself. Actually, it doesn't (mind-blown). +[UIViewController load] is called when the class is loaded into the process' address space, which means that the swizzling happens before the class is even used. What actually happens during the swizzling process is that the swizzled_viewDidLoad becomes added as a new instance method in the class. Then, the implementations of viewDidLoad and swizzled_viewDidLoad get exchanged. This means that the viewDidLoad method contains the implementation of swizzled_viewDidLoad. So when we call [self swizzled_viewDidLoad], what we're actually doing is calling the original implementation. This is the magic of the Objective C runtime. <br>
+        &emsp;&emsp;&emsp;While this particular implementation works, let's take a step back and recall the objc_method structure. It contains SEL method_name, which points to the name of the selector, a char *method_types, which isn't important, and finally IMP method_imp, which is a pointer to the start of a method implementation. What you probably didn't realize is that Objective C IMP's are actually just functions pointers. What we can do instead of internally in the class define the method is use the layout that Objective C uses for functions and perform method swizzling that way as well. Let's show an example. <br>
+        <pre><code>
+static IMP _original_viewDidLoad;
+
+void _swizzled_viewDidLoad(id self, SEL _cmd){
+    // calls the original implementation of viewDidLoad
+    ((void(id,SEL))_original_viewDidLoad)(self, _cmd);
+    NSLog(@"This is the swizzled implementation for -[UIView viewDidLoad]");
+}
+
+void swizzleFunctions(){
+    // gets the original method to swizzle
+    Method method = class_getInstanceMethod([UIViewController class],@selector(viewDidLoad));
+    // sets the IMP method_imp field of objc_method to the swizzled implementation
+    // this function returns the original implementation
+    // we can use it to call the original if we need its behavior
+    _original_viewDidLoad = method_setImplementation(method,(IMP)_swizzled_viewDidLoad);
+}
+        <br></pre></code>
         <h5>StreakNotify</h5>
         <span style="color:orange;">01-10-2017</span>
         <p>I recented talked to CokePokes about the recent changes within Snapchat with regards to DRM, and concluded that the best solution for allowing compatibility with Phantom is to include my code within the Phantom project. I will remain the maintainer of my code, however I will be collaborating with CokePokes to update StreakNotify/Phantom to combat Snapchat's DRM. BUT, if you only want to install StreakNotify alone, you can since it by itself does not activate Snapchat's DRM. To install my tweak through BigBoss on Cydia, use this <a href="http://cydia.saurik.com/package/com.yungraj.streaknotify/"> link.</a> I will still be pushing updates to this tweak for the newest versions and doing the best I can to add more features/fix bugs. If you have any questions, you can email me.</p>
