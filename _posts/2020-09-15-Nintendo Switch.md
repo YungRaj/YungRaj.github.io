@@ -304,10 +304,42 @@ You'll find package2 in the title id’s **(0100000000000819, 010000000000081A, 
 
 Package2 is distributed encrypted, so therefore extra encryption is not applied when installed to the flash system.
 
-Offset	Size	Description
-0x0		0x100	RSA-2048 signature (PKCS#1 v2.1 RSASSA-PSS-VERIFY with SHA256)
-0x100	0x100	Encrypted header
-0x200	Variable	Encrypted body
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;margin:0px auto;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-0pky">Offset</th>
+    <th class="tg-0pky">Size</th>
+    <th class="tg-0pky">Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-0pky">0x0</td>
+    <td class="tg-0pky">0x100</td>
+    <td class="tg-0pky">RSA-2048 signature (PKCS#1 v2.1 RSASSA-PSS-VERIFY with SHA256)</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">0x100</td>
+    <td class="tg-0pky">0x100</td>
+    <td class="tg-0pky">Encrypted header</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">0x200</td>
+    <td class="tg-0pky">Variable</td>
+    <td class="tg-0pky">Encrypted body</td>
+  </tr>
+</tbody>
+</table>
+Center table horizontally, First row is a table header 
+
 
 Package2's contents are encrypted with AES-CTR mode with a key only known by the TrustZone, where the first 0x10 bytes are the encrypted header's CTR. The encrypted body is split into four sections, where a CTR is stored inside each of the decrypted headers. This is what the package2's header looks like decrypted.
 
@@ -451,7 +483,8 @@ When decrypted, package2's header is as follows.
 This section contains the plaintext Switch kernel binary
 
 **Section 1**
-This section contains the built in sysmodules encapsulated in a custom format with the ini and kip, where ini stored the initial kernel process list, and where kip contains the KIP, which is the Kernel Initial Process.
+This section contains the built in sysmodules encapsulated in a custom format with the ini and kip, where ini stores the initial kernel process list and kip stores the kernel initial process.
+
 
 ## The Tegra X1 SoC
 
