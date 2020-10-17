@@ -337,9 +337,7 @@ Package2 is distributed encrypted, so therefore extra encryption is not applied 
     <td class="tg-0pky">Encrypted body</td>
   </tr>
 </tbody>
-</table>
-Center table horizontally, First row is a table header 
-
+</table> 
 
 Package2's contents are encrypted with AES-CTR mode with a key only known by the TrustZone, where the first 0x10 bytes are the encrypted header's CTR. The encrypted body is split into four sections, where a CTR is stored inside each of the decrypted headers. This is what the package2's header looks like decrypted.
 
