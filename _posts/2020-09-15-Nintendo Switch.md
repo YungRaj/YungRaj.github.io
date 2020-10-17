@@ -100,17 +100,65 @@ This blob is encrypted inside the package1 file and is decrypted by the package1
 When decrypted, the blob is encapsulated in the following header.
 
 Header
-| Offset | Size | Description      |
-|--------|------|------------------|
-| 0x0    | 4    | Magic "PK11"     |
-| 0x4    | 4    | Section 0 size   |
-| 0x8    | 4    | Section 0 offset |
-| 0xC    | 4    | Unknown          |
-| 0x10   | 4    | Section 1 size   |
-| 0x14   | 4    | Section 1 offset |
-| 0x18   | 4    | Section 2 size   |
-| 0x1C   | 4    | Section 2 offset |
-
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-0pky">Offset</th>
+    <th class="tg-0pky">Size</th>
+    <th class="tg-0pky">Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-0pky">0x0</td>
+    <td class="tg-0pky">4</td>
+    <td class="tg-0pky">Magic "PK11"</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">0x4</td>
+    <td class="tg-0pky">4</td>
+    <td class="tg-0pky">Section 0 size</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">0x8</td>
+    <td class="tg-0pky">4</td>
+    <td class="tg-0pky">Section 0 offset</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">0xC</td>
+    <td class="tg-0pky">4</td>
+    <td class="tg-0pky">Unknown</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">0x10</td>
+    <td class="tg-0pky">4</td>
+    <td class="tg-0pky">Section 1 size</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">0x14</td>
+    <td class="tg-0pky">4</td>
+    <td class="tg-0pky">Section 1 offset</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">0x18</td>
+    <td class="tg-0pky">4</td>
+    <td class="tg-0pky">Section 2 size</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">0x1C</td>
+    <td class="tg-0pky">4</td>
+    <td class="tg-0pky">Section 2 offset</td>
+  </tr>
+</tbody>
+</table>
 **Section 0**
 This section tentatively contains the warmboot binary.
 
