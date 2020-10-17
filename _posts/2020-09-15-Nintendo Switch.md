@@ -76,15 +76,15 @@ As you can see on the Mariko units there’s a Mariko OEM header that contains t
 
 The package1 metadata is the same however, which contains the hashes of each section and then finally the pkg1 blob that contains the encrypted contents of the files shown above. You need special keys to get the package1 file payload, and on Erista you need special keys to decrypt the firmware, which includes the package1 binary. On Erista, this is what the Header looks like.
 
-**Header**<br />
-Offset	Size	Description<br />
-0x0		0x4		Package1ldr hash (first four bytes of SHA256(package1ldr))<br />
-0x4		0x4		Secure Monitor hash (first four bytes of SHA256(secure_monitor))<br />
-0x8		0x4		NX Bootloader hash (first four bytes of SHA256(nx_bootloader))<br />
-0xC		0x4		Build ID<br />
-0x10	0xE		Build Timestamp (yyyyMMddHHmmss)<br />
-0x1E	0x1		[7.0.0+] Key Generation<br />
-0x1F	0x1		Version<br />
+**Header**
+| Offset | Size | Description                                                     |
+| 0x0      | 0x4  | Package1ldr hash (first four bytes of SHA256(package1ldr))        |
+| 0x4      | 0x4  | Secure Monitor hash (first four bytes of SHA256(secure\_monitor)) |
+| 0x8      | 0x4  | NX Bootloader hash (first four bytes of SHA256(nx\_bootloader))   |
+| 0xC      | 0x4  | Build ID                                                          |
+| 0x10     | 0xE  | Build Timestamp (yyyyMMddHHmmss)                                  |
+| 0x1E     | 0x1  | [7.0.0+] Key Generation                                           |
+| 0x1F     | 0x1  | Version                                                           |
 
 The keys were not that difficult to obtain on a hacked Switch, so on Firmwares 6.2+, Nintendo added an extra key that is used by the TSEC processor, also known as Falcon, that I will explain later that encrypts/decrypts the final contents of the pk11 blob inside package1. We are working on an exploit to the TSEC processor that obtains this key so that on Firmwares 6.2+ we can obtain the Secure Monitor/NX Bootloader, etc. On Mariko units, the extra key that gets created by the TSEC chip is replaced by two new keys that decrypt the Mariko units, the Mariko KEK and BEK. More information on this will come later as members of the Nintendo homebrew community are withholding information on the use cases of these keys.
 You should expect to see an output of hactool actually dumping the final payloads, but this is not the case as we are missing those special keys for Erista coming from the TSEC and on Mariko the KEK and BEK keys.
@@ -99,16 +99,16 @@ This blob is encrypted inside the package1 file and is decrypted by the package1
 
 When decrypted, the blob is encapsulated in the following header.
 
-**Header**<br />
-Offset	Size	Description<br />
-0x0	4	Magic "PK11"<br />
-0x4	4	Section 0 size<br />
-0x8	4	Section 0 offset<br />
-0xC	4	Unknown<br />
-0x10	4	Section 1 size<br />
-0x14	4	Section 1 offset<br />
-0x18	4	Section 2 size<br />
-0x1C	4	Section 2 offset<br />
+**Header**
+| Offset | Size | Description      |
+| 0x0    | 4    | Magic "PK11"     |
+| 0x4    | 4    | Section 0 size   |
+| 0x8    | 4    | Section 0 offset |
+| 0xC    | 4    | Unknown          |
+| 0x10   | 4    | Section 1 size   |
+| 0x14   | 4    | Section 1 offset |
+| 0x18   | 4    | Section 2 size   |
+| 0x1C   | 4    | Section 2 offset |
 
 **Section 0**
 This section tentatively contains the warmboot binary.
@@ -121,60 +121,60 @@ This section tentatively contains the Secure Monitor binary.
 
 Mariko units have a different signed and encrypted format to make exploring the contents of package1 much harder, so reverse engineering is made more difficult.
 
-Offset	Size	Description<br />
-0x0		0x110	Cryptographic signature<br />
-0x0000: 		CryptoHash (empty)<br />
-0x0010: 		RsaPssSig<br />
-0x110	0x20	Random block<br />
-0x130	0x20	SHA256 hash over package1 data<br />
-0x150	0x4		Version<br />
-0x154	0x4		Length<br />
-0x158	0x4		LoadAddress<br />
-0x15C	0x4		EntryPoint<br />
-0x160	0x10	Reserved<br />
-0x170	Variable<br />
-		Package1 data<br />
-0x0170: 		Header<br />
-0x0190: 		Body (encrypted)<br />
+| Offset 	| Size	| Description |
+|0x0		| 0x110	| Cryptographic signature |
+| 			|		| 0x0000: 		CryptoHash (empty) |
+|			|		| 0x0010: 		RsaPssSig |
+|			| 0x110 | 0x20	Random block |
+| 0x130		| 0x20	| SHA256 hash over package1 data |
+| 0x150		| 0x4	| Version |
+| 0x154		| 0x4	| Length |
+| 0x158		| 0x4	| LoadAddress |
+| 0x15C		| 0x4	| EntryPoint |
+| 0x160		| 0x10	| Reserved |
+| 0x170		|		| Variable |
+|			|		| Package1 data |
+| 0x0170:	|		| Header |
+| 0x0190:	|		| Body (encrypted) |
 
 ## Package2
 You'll find package2 in the title id’s **(0100000000000819, 010000000000081A, 010000000000081B and 010000000000081C)** and installed on the eMMC storage's **BCPKG2** partitions. Package2 contains the Switch kernel for the Horizon operating system and the built-in sysmodules.
 
 Package2 is distributed encrypted, so therefore extra encryption is not applied when installed to the flash system.
 
-Offset	Size	Description<br />
-0x0		0x100	RSA-2048 signature (PKCS#1 v2.1 RSASSA-PSS-VERIFY with SHA256)<br />
-0x100	0x100	Encrypted header<br />
-0x200	Variable	Encrypted body<br />
+Offset	Size	Description
+0x0		0x100	RSA-2048 signature (PKCS#1 v2.1 RSASSA-PSS-VERIFY with SHA256)
+0x100	0x100	Encrypted header
+0x200	Variable	Encrypted body
 
 Package2's contents are encrypted with AES-CTR mode with a key only known by the TrustZone, where the first 0x10 bytes are the encrypted header's CTR. The encrypted body is split into four sections, where a CTR is stored inside each of the decrypted headers. This is what the package2's header looks like decrypted.
 
 When decrypted, package2's header is as follows.
 
-Offset	Size	Description<br />
-0x0		0x10	Header's CTR, official code copies the pre-decryption CTR over the decrypted result. Also used as metadata.<br />
-0x10	0x10	Section 0 CTR<br />
-0x20	0x10	Section 1 CTR<br />
-0x30	0x10	Section 2 CTR<br />
-0x40	0x10	Section 3 CTR<br />
-0x50	0x4	Magic "PK21"<br />
-0x54	0x4	Base offset<br />
-0x58	0x4	Always 0<br />
-0x5C	0x1	Package2 version. Must be >= {minimum valid package2 version} constant in TZ.<br />
-0x5D	0x1	Bootloader version. Must be <= {current bootloader version} constant in TZ.<br />
-0x5E	0x2	Padding<br />
-0x60	0x4	Section 0 size<br />
-0x64	0x4	Section 1 size<br />
-0x68	0x4	Section 2 size<br />
-0x6C	0x4	Section 3 size<br />
-0x70	0x4	Section 0 offset<br />
-0x74	0x4	Section 1 offset<br />
-0x78	0x4	Section 2 offset<br />
-0x7C	0x4	Section 3 offset<br />
-0x80	0x20	SHA-256 hash over encrypted section 0<br />
-0xA0	0x20	SHA-256 hash over encrypted section 1<br />
-0xC0	0x20	SHA-256 hash over encrypted section 2<br />
-0xE0	0x20	SHA-256 hash over encrypted section 3<br />
+| Offset | Size | Description                                                                                                |
+| 0x0    | 0x10 | Header's CTR, official code copies the pre-decryption CTR over the decrypted result. Also used as metadata |
+| 0x10   | 0x10 | Section 0 CTR                                                                                              |
+| 0x20   | 0x10 | Section 1 CTR                                                                                              |
+| 0x30   | 0x10 | Section 2 CTR                                                                                              |
+| 0x40   | 0x10 | Section 3 CTR                                                                                              |
+| 0x50   | 0x4  | Magic "PK21"                                                                                               |
+| 0x54   | 0x4  | Base offset                                                                                                |
+| 0x58   | 0x4  | Always 0                                                                                                   |
+| 0x5C   | 0x1  | Package2 version. Must be >= {minimum valid package2 version} constant in TZ.                              |
+| 0x5D   | 0x1  | Bootloader version. Must be <= {current bootloader version} constant in TZ.                                |
+| 0x5E   | 0x2  | Padding                                                                                                    |
+| 0x60   | 0x4  | Section 0 size                                                                                             |
+| 0x64   | 0x4  | Section 1 size                                                                                             |
+| 0x68   | 0x4  | Section 2 size                                                                                             |
+| 0x6C   | 0x4  | Section 3 size                                                                                             |
+| 0x70   | 0x4  | Section 0 offset                                                                                           |
+| 0x74   | 0x4  | Section 1 offset                                                                                           |
+| 0x78   | 0x4  | Section 2 offset                                                                                           |
+| 0x7C   | 0x4  | Section 3 offset                                                                                           |
+| 0x80   | 0x20 | SHA-256 hash over encrypted section 0                                                                      |
+| 0xA0   | 0x20 | SHA-256 hash over encrypted section 1                                                                      |
+| 0xC0   | 0x20 | SHA-256 hash over encrypted section 2                                                                      |
+| 0xE0   | 0x20 | SHA-256 hash over encrypted section 3    
 
 **Section 0**
 This section contains the plaintext Switch kernel binary
