@@ -287,14 +287,14 @@ Mariko units have a different signed and encrypted format to make exploring the 
     <td class="tg-0lax">Package1 data</td>
   </tr>
   <tr>
-    <td class="tg-0lax">0x0170: Header</td>
+    <td class="tg-0lax">0x0170:</td>
     <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
+    <td class="tg-0lax">Header</td>
   </tr>
   <tr>
-    <td class="tg-0lax">0x0190: Body (encrypted)</td>
+    <td class="tg-0lax">0x0190:</td>
     <td class="tg-0lax"></td>
-    <td class="tg-0lax"></td>
+    <td class="tg-0lax">Body (encrypted)</td>
   </tr>
 </tbody>
 </table>
@@ -485,15 +485,102 @@ This section contains the built in sysmodules encapsulated in a custom format wi
 
 
 ## The Tegra X1 SoC
+The Tegra X1 as mentioned before runs four ARM Cortex A53 for the boot start up, and then four ARM Cortex A57 cores with a Maxwell based graphics processing unit. The manual for the Tegra X1 can be found here. The Maxwell GPU has 256 cores, supports MPEG-4 HEVC, VP9, H.264, and many more formats. The SoC itself has a 20nm process the X1+ models have a 16nm process. The A57 cores clock at 1.9 GHz and the A52 cores clock at 1.53 GhZ. 
+I’m not going to go into detail here, but in the SoC manual, it covers every corner, edge and detail on how the SoC works. In short, the technical manual is created to provide guidance to programmers writing code for Tegra X1 devices. It describes the register interfaces and hardware functionality, from the memory controller, address map, peripherals, chipset, IO, graphics, power management, interrupts, etc.
+Below is a block diagram of the SoC.
+
+![tegra-x1](https://github.com/YungRaj/YungRaj.github.io/raw/master/images/Nintendo-Switch/tegra_x1_soc.png)
+
+As one can see here, there is a large set of responsibilities delegated to the SoC because it contains the whole system on just one flat sheet of silicon. On the top left you can see all of the CPU cores, their caches, etc. The wires coming out of the CPU cores are the memory buses designed for writes and reads to the main system memory, which is handled on multiple channels. 
+On the left side to the right of the memory controller, are all of the peripherals from SATA, USB, MIPI, SD/MMC, HDMI, mini DisplayPort, etc. There are two TSEC chips and a Security Engine processor, which handle cryptographically secure operations on the SoC. You can think of the Security Engine as basically a hardware crypto accelerator and the TSEC as a conforming agent in implementing the TrustZone architecture for ARM64. For anyone that isn’t familiar with the TrustZone model, here is a short diagram that expresses what it’s for and why.
+
+![switch-tz](https://github.com/YungRaj/YungRaj.github.io/raw/master/images/Nintendo-Switch/switch_tz.png)
+
+Basically the idea is that there is a notion of a Secure World and Normal World in the ARM TrustZone. The Normal World is what you expect to be normal execution of the computer. This is known as Exception Levels 0, 1, and 2, ELx for short. EL0 is generally userspace inside an operating system, EL1 is the kernel and EL2 is the hypervisor, generally dedicated for the purpose of running virtual machines under a host. EL3 adds a 4th dimension to this, which runs in the Secure World. The Secure World has been used in the past as a watchdog to ensure that everything executing in the normal world is as expected. In the examples shown before on the Nintendo Switch, the Horizon OS is EL0 and EL1, contained in Package2. Generally another chip on the ARM SoC handles the Secure Monitor, which is interfaced with by the Application Processor using TrustZone RAM in its own MMIO space, and this happens to be the TSEC Falcon microprocessor. We’ll discuss that later. This TZRAM memory is generally locked down and encrypted so that no attacker can modify it directly with physical memory access or other special page table handling mechanisms.
+All of these devices and processors are connected to the AHB, also known as the Advanced High Performance Bus, which is a bus protocol designed by ARM that conforms to the Advanced Microcontroller Bus Architecture. In the top middle you got the IRAM and the IROM, which are basically containing initial boot code in short.
+
+And then the right side is all the other peripherals that haven’t been mentioned like I2C, SPI, Quad-SPI, and UART on the FAPB peripheral bus. The Power Management Controller, Real Time Clock, Pulse Width Modulator, which handles reduction of power in electrical signals, Fuses, which contain non-programmable data that deals with firmware and software downgrade and upgrade restrictions at least on the Switch, use cases are different for each device that contains this SOC, the Thermal Sensor, and everything else.
+
+In an extremely well written whitepaper, the way the SoC in the Switch handles power management events in the PMC leaves room for an attack against the TrustZone by modifying the PMC registers when the machine wakes, replacing the TZRAM with attacker controlled data, and with another bug found in the Security Engine we can replace the keys used to decrypt TZRAM to verify their own TZRAM.
+
+Examples of many kinds of security compromises that go against the SoC are glitch attacks, fault injection attacks, power management and state changes leaving security critical components wide open, hardware level attacks such as misconfiguring the memory mapped IO config, file systems buffer overflows, device driver hijacking, DMA attacks, low level boot resources being compromised, and much more.
+
+In short, all of these things are essential to know if you want to explore the security, performance and integrity of a system like a Nintendo Switch. I can’t go that much further in detail because this would extend far beyond anything you’d ever imagined in terms of technical breakdown.
+
+## The Falcon TSEC Processor
+TSEC (Tegra Security Co-processor) is a special unit inside the Tegra X1 powered by a Falcon microprocessor designed by NVIDIA to handle security critical operations inside the Nintendo Switch. On the Nintendo Switch the Memory Mapped IO region is as follows.
+
+0x54500000 to 0x54501000: THI (Tegra Host Interface)
+0x54501000 to 0x54501400: FALCON (Falcon microcontroller)
+0x54501400 to 0x54501600: SCP (Secure coprocessor)
+0x54501600 to 0x54501680: TFBIF (Tegra Framebuffer Interface)
+0x54501680 to 0x54501700: CG (Clock Gate)
+0x54501700 to 0x54501800: BAR0 (HOST1X device DMA)
+0x54501800 to 0x54501900: TEGRA (Miscellaneous interfaces)
+
+A larger more detailed overview of the memory mapped regions and the registers used on the TSEC Falcon is found here. Also note that this information can also be found on the NVIDIA Tegra X1 SoC manual that I mentioned before.
+The TSEC has three modes in a security context. Non-Secure, which restricts the micoprograms executing from reading most registers and memory, Light-Secure, which mainly used in the context of debugging and development and Heavy Secure, which enables full access to the cryptographic hardware, and protected/secret registers and memory. The Falcon has a limited microcontroller environment leaving out the heavy asymmetric cryptographic operations like RSA out which both require expensive resources of memory to implement in software and hardware. Falcon separates instructions for data and instruction memory through IMEM and DMEM and together measures data in the KB range.
+
+In the article I mentioned before, they achieved code execution in the Heavy Secure mode of the TSEC Falcon processor by smashing the stack when KeygenLdr loads and reads a blob of data that isn’t authenticated. This blob of data is attacker controlled and gets copied into TSEC memory. After a series of more complicated steps that are refinely described in the paper, they were able to achieve ROP code execution after the Keygen has been decrypted but with its pages marked as secret.
+
+Sept is a payload designed by the best Nintendo hackers in the world but is proprietary and loaded as an obfuscated payload in the custom firmwares and bootloaders designed for a hacked unpatched Switch. It was designed to bypass checks implemented in SecureBoot and does so by loading the original TSEC firmware unmodified. The TSEC firmware is designed to perform an AES CMAC of the Package1 binary before returning execution to the bootloader stored in it. Sept forges the CMAC of a custom Package1 binary, passing secure boot authentication mechanisms in SecureBoot. It derives keys in place using results of registers, and scrambles the TSEC and TSEC root key, making it impossible to use the original Secure Monitor firmware as the keys to perform key generation are non-existent at that point. Below is an example of loading custom firmware to the TSEC inside of the source code of ReiNX, a custom firmware for the Nintendo Switch.
+
+![tsec-fw-load](https://github.com/YungRaj/YungRaj.github.io/raw/master/images/Nintendo-Switch/tsec_fw_load.png)
 
 
-## Resources
+## Implementations Similar to the TSEC Processor
+# Secure Enclave
+On the Apple frontier, the SecureEnclave is the dedicated processor that serves as the watchdog described in the ARM TrustZone. The iOS bootloader is also finally responsible for initializing the Secure Enclave Processor firmware.
+The purpose of the Secure Enclave is to handle keys and other info such as biometrics that is sensitive enough to not be handled by the Application Processor (AP). It is isolated with a hardware filter so the AP cannot access it. It shares RAM with the AP, but it's portion of the RAM (known as TZ0) is encrypted. The secure enclave itself is a flashable 4MB AKF processor core called the Secure Enclave Processor (SEP). The technology used is similar to the ARM TrustZone but contains proprietary code for Apple KF cores in general and SEP specifically. It is also responsible for generating the UID key on A9 or newer chips that protects user data at rest. Here is a short brief overview in graph form that shows basic operation of the SEP.
 
+ ![secure-enclave](https://github.com/YungRaj/YungRaj.github.io/raw/master/images/Nintendo-Switch/secure_enclave.png)
+
+During Boot the Apple processor relies on the SEP to handle the Secure World, and thus needs to be configured properly by the AP to be initialized properly. This is done by setting the TZ0 and TZ1 registers, which are set before giving the SEP the clear to boot. For each register there are three 4 byte registers base/end/lock for each trust zone to be protected. The TZ0 TZ1 registers are protected by the Apple Memory Cache Controller so that they don’t get mapped into the operating system to be modified by an attack or read/written to. Once written to, they cannot be modified. The TZ0 base/end registers are generally at 
+
+![tz0_tz1](https://github.com/YungRaj/YungRaj.github.io/raw/master/images/Nintendo-Switch/tz0_tz1.png)
+
+These are the expected values of the TZ0 TZ1 registers.
+
+![tz_map](https://github.com/YungRaj/YungRaj.github.io/raw/master/images/Nintendo-Switch/tz_map.png)
+
+When the boot_tz0() is triggered, the Trust Zone registers are ensured that they are locked. The TZ memory is generally encrypted as well, so we must set the memory ranges for the encryption to take place as well as set the AES keys and finally activate encryption of that memory.
+The mailbox is the communication channel between the SEP and AP, which allows the AP and SEP to reliably exchange information and trigger the security critical tasks that it is supposed to perform. The AP is mapped into memory mapped IO range in the SEP at 0x20DA0400 and the SEP is mapped into the AP at PA 0x20DA00B80 or VA 0xCDA00B80
+
+Basically there is a message loop that the SEP executes to wait for opcodes and data to come into the mailbox mechanism to perform tasks. The first stage of boot handles opcodes 1-10 and 14-16 and the second stage will handle opcodes 1-4, 6-10 and 15-16.
+
+![tz_commands](https://github.com/YungRaj/YungRaj.github.io/raw/master/images/Nintendo-Switch/tz_commands.png)
+
+In general, the SEP has been shown to be extremely resistant to attacks against it to ensure that even when an Apple device is hijacked and compromised down to the kernel, that the SEP serves to protect the extremely vital and important information that is stored on it. It is not perfect, but because Apple went from the T2 security chip on the X86 version of the MacBooks to the M1 Mac containing a full SoC with the functionality of the T2 packed all into it including the SEP part, the frontiers of ARM and what’s going on here is important to consider as an engineer and architecturally conscious individual to better protect and preserve the ethics and moral considerations of technology.
+
+## Purpose of this Paper
+Basically over the last 15 years, there have been chip wars between various processor manufacturers on the grounds of performance, energy consumption, minimizing size, and finally security. Because NVIDIA recently bought ARM Holdings co and the fact that they are a key proprietor in the development of GPUs, it feels right to briefly research and speak on the innovations they’ve come up with in the past recently and what may be to come, since they will now take the pressure of setting the stage for new innovations and technologies. X86 has been poorly losing the battle against ARM when it comes to the future of semiconductors and manufacturing sheets of silicon on small < 10 nm processes which meet the demands of performance, energy consumption and security. For mobile devices, computers, and even game consoles now, it seems like NVIDIA and ARM are going to be leading the pack in the new developments that are occurring. This also means that there is going to be competition and cooperation along the way, in which case companies like Apple are following suit to all the things occurring and jumping on the wave of ARM silicon to be shipped in their new Macs. Apple seems to be also competing by developing their silicon in house and branding it as their own, though to be manufactured elsewhere. The M1 chip, although just being released, seems to be a great new invention to add on top of additional previous technologies like the Secure Enclave, T2 Security, and the firmware bootloading mechanisms like EFI, SecureROM and iBoot.
+
+## Sources
 Corporation, Nvidia. Tegra Boot Flow, http.download.nvidia.com/tegra-public-appnotes/tegra-boot-flow.html.
-
-“Nintendo SwitchBrew Wiki.” Nintendo Switch Brew, switchbrew.org/wiki/. 
-
+“Nintendo SwitchBrew Wiki.” Nintendo Switch Brew, switchbrew.org/wiki/.
 SciresM. “SciresM/hactool” GitHub, github.com/SciresM/hactool.
-
 NintendoSwitchPkg. “imbushuo/NintendoSwitchPkg.” GitHub, github.com/imbushuo/NintendoSwitchPkg.
+Methodically Defeating Nintendo Switch Security. https://arxiv.org/pdf/1905.07643.pdf
+Wiibrew Contributors. Signing bug https://wiibrew. org/wiki/Signing bug
+Console Hacking 2010, PS3 Epic Fail, Dec. 2010. https://media.ccc.de/v/27c3-4087-en-console hacking 2010
+
+Viva la Vita Vida, Hacking the most secure handheld console, https://media.ccc.de/v/c4.openchaos.2018.06. glitching- the- switch
+
+3DBrew Contributors. Browserhax. https://www. 3dbrew.org/wiki/Browserhax
+Console Hacking 2013, WiiU, Dec. 2013 https://media.ccc.de/v/30C3 - 5290 - en - saal 2 - 201312272030
+
+3dbrew.org/wiki/Category:File formats
+
+System calls. https:switchbrew.org/wiki/SVC
+
+IPC Marshalling: https://switchbrew.org/wiki/
+3dbrew Contributors. 3ds system flaws - firm sysmodules.https://www.3dbrew.org/wiki/3DS System Flaws
+
+3ds system flaws https://www.3dbrew.org/wiki/3DS System Flaws
+
+ReSwitched Contributors. Cagetheunicorn https://github.com/reswitched/cagetheunicorn
+
+https://github.com/reswitched/mephisto
+
+https://github.com/windknown/presentations/blob/master/Attack_Secure_Boot_of_SEP.pdf
 
