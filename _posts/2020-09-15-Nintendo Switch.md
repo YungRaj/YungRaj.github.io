@@ -510,13 +510,13 @@ In short, all of these things are essential to know if you want to explore the s
 ## The Falcon TSEC Processor
 TSEC (Tegra Security Co-processor) is a special unit inside the Tegra X1 powered by a Falcon microprocessor designed by NVIDIA to handle security critical operations inside the Nintendo Switch. On the Nintendo Switch the Memory Mapped IO region is as follows.
 
-0x54500000 to 0x54501000: THI (Tegra Host Interface) </br>
-0x54501000 to 0x54501400: FALCON (Falcon microcontroller) </br>
-0x54501400 to 0x54501600: SCP (Secure coprocessor) </br>
-0x54501600 to 0x54501680: TFBIF (Tegra Framebuffer Interface) </br>
-0x54501680 to 0x54501700: CG (Clock Gate) </br>
-0x54501700 to 0x54501800: BAR0 (HOST1X device DMA) </br>
-0x54501800 to 0x54501900: TEGRA (Miscellaneous interfaces) </br>
+0x54500000 to 0x54501000: THI (Tegra Host Interface) <br />
+0x54501000 to 0x54501400: FALCON (Falcon microcontroller) <br />
+0x54501400 to 0x54501600: SCP (Secure coprocessor) <br />
+0x54501600 to 0x54501680: TFBIF (Tegra Framebuffer Interface) <br />
+0x54501680 to 0x54501700: CG (Clock Gate) <br />
+0x54501700 to 0x54501800: BAR0 (HOST1X device DMA) <br />
+0x54501800 to 0x54501900: TEGRA (Miscellaneous interfaces) <br />
 
 A larger more detailed overview of the memory mapped regions and the registers used on the TSEC Falcon is found here. Also note that this information can also be found on the NVIDIA Tegra X1 SoC manual that I mentioned before.
 The TSEC has three modes in a security context. Non-Secure, which restricts the micoprograms executing from reading most registers and memory, Light-Secure, which mainly used in the context of debugging and development and Heavy Secure, which enables full access to the cryptographic hardware, and protected/secret registers and memory. The Falcon has a limited microcontroller environment leaving out the heavy asymmetric cryptographic operations like RSA out which both require expensive resources of memory to implement in software and hardware. Falcon separates instructions for data and instruction memory through IMEM and DMEM and together measures data in the KB range.
