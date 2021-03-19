@@ -48,7 +48,7 @@ Personal Security involves access authorization, badging programs, Human Reliabi
 
 Materials Control and Accountability involves special and alternate Nuclear materials through measurements, QA, accounting containment, surveillance and physical inventory"
 
-Physical protection of facilities and/or nuclear material at fixed sites and during transportation as well as material control and accounting becomes a high priority if we would like to make the move to Nuclear successful."
+Physical protection of facilities and/or nuclear material at fixed sites and during transportation as well as material control and accounting becomes a high priority if we would like to make the move to Nuclear successful.
 
 Sensitive and classified information such as the transportation and storage of safeguarded materials such as Nuclear Waste is crucial to preventing others from knowing the locations of safeguarded materials as well as schedules of them being transported across the country. 
 
