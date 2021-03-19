@@ -7,7 +7,7 @@ categories: blog
 
 Living in Houston, where the oil and gas industry is fearfully large and in the nearest events of the modern day when the electric grid nearly collapsed for months, has made me contemplate the extreme challenges that we will face in the coming years. Oil and gas may have done well in years past, but the supply is extremely limited especially given how fast we are burning what we currently have. Oil is estimated to last for only the next 50 years. This is not only unsustainable but disappointing for those who are raising children in upcoming generations, who will have to carry the burden of the past in their own hands.
 
-![nuclear_reactions](https://github.com/YungRaj/YungRaj.github.io/raw/master/images/Nuclear/nuclear_reactions.jpg)
+<div align="center"> ![nuclear_reactions](https://github.com/YungRaj/YungRaj.github.io/raw/master/images/Nuclear/nuclear_reactions.jpg) </div>
 
 ## Nuclear Fission
 
