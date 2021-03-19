@@ -20,7 +20,7 @@ Although there may be enough materials to use for upcoming years while we battle
 
 The next solution that we would have is nuclear fusion. Even though 1 in 6400 Hydrogen atoms of water on Earth are Deuterium, the isotope of Hydrogen with 1 neutron, the mass of water on Earth is 1.35 times 10^18 tons, 11.11% of mass in water chemically goes to Hydrogen, and if you multiply that by the percentage of Deuterium in water times let's say 2.5% of water on earth you get 5.9 * 10^11 tons of Deuterium gas, which means that the supply of Deuterium is effectively infinite. In fact, to obtain Deuterium from water you must separate the heavy water from the normal water, where the heavy water contains Deuterium Hydrogen. The normal water is stripped away from the heavy water and while the normal nutrients found in water that replenish us such as Calcium and Nitrogen are missing, the normal water without H-2 is healthier for you if you are able to replace these nutrient deficiencies elsewhere. Deuterium depleted water is proven to boost metabolism and have anti-cancerous effects.
 
-![hfus1](https://github.com/YungRaj/YungRaj.github.io/raw/master/images/Nuclear/hfus1.png)
+<div align="center"> <img src="https://github.com/YungRaj/YungRaj.github.io/raw/master/images/Nuclear/hfus1.png" /></div>
 
 A fusion reaction between Tritium and Deuterium releases 17.6 mega electron volts of energy. In short, 1g of Hydrogen fuel can produce 1000 MW of energy. The problem is that Tritium is even scarcer than most fissile material, where the total mass of it within naturally occurring water is 829 kg on Earth. D-D nuclear fusion exists too, where two Deuterium molecules fuse into an isotope of Helium, but this has the same problems that D-T fusion does, where the thermal energy required for the reaction is lower or similar to the thermal gain that can be converted to electricity. The temperature needed to break the Coulomb Barrier so that protons can collide in a D-T reaction is 45 Million Degrees K and almost 500 million degrees K in a D-D reaction. This is why D-T reactions are the preferred methods for fusion.
 
@@ -32,7 +32,7 @@ As a Security Researcher, one fundamental component of Nuclear Energy that serve
 
 Nuclear Security aims to prevent, detect and respond to acts that are intended to bring the harmful effects of radiation to the environment, property, and society as a whole as well as protect facilities and other materials involved in fission and fusion. This involves work that provide outlines to deal with the risks of radiation from typical usage and prevent incidents where the radiation could be exposed to the rest of the world as well as design systems that provide countermeasures against attacks.
 
-![nuclear_security](https://github.com/YungRaj/YungRaj.github.io/raw/master/images/Nuclear/nuclear_security.png)
+<div align="center"> <img src="https://github.com/YungRaj/YungRaj.github.io/raw/master/images/Nuclear/nuclear_security.png" /></div>
 
 Situations where the radiation is in the vicinity of human activity are when the Nuclear waste is transported from one facility to a site where they are stored underground. Nuclear facilities themselves must be secured and locked down so that malicious entities may not enter the facility and do dangerous things that would threaten the normal lives of people. Cyber threats and new technologies could be used in attacks, and thus broadens the subject of Nuclear Security to something I'm personally well acquainted with.
 
@@ -58,7 +58,7 @@ As the world becomes more dependent on computers and technology, we must be awar
 
 ## Car Recycling
 
-![car_recycling](https://github.com/YungRaj/YungRaj.github.io/raw/master/images/Nuclear/car_recycling.jpg)
+<div align="center"> <img src="https://github.com/YungRaj/YungRaj.github.io/raw/master/images/Nuclear/car_recycling.jpg" /></div>
 
 Also, in the near future, the Car Recycling business is highly likely to take off, because with the millions upon millions of cars that are currently on the road, as gasoline and diesel become obsolete, we are going to need to do something with these now inefficient and useless cars that we need to get rid of.
 
@@ -67,7 +67,7 @@ Car Recycling businesses do exist, but the facilities are way too small to meet 
 The only extra material that you'd need to build a new electric car from a recycled gasoline and diesel car is the Lithium Ion or Lithium Polymer for the battery and Silicon for the semiconductors that power the computers within the vehicles. From the recycled materials you already have the body and the base, and even the materials from the engine can be used for the body and base since they are likely to be made of Aluminum.
 You might ask, why rush to make electric cars? Because for every gallon of gasoline burned, the thermal efficiency is 15-20%, which means that the amount of energy that is used to drive the car in the reaction of Hydrocarbons and Oxygen is 15-20%, which is horrible. The reason why we have used gasoline and diesel cars for so long because the byproducts of them aren't as bad as other chemical compounds and resources.
 
-![capacitor_factor](https://github.com/YungRaj/YungRaj.github.io/raw/master/images/Nuclear/capacitor_factor.png)
+<div align="center"> <img src="https://github.com/YungRaj/YungRaj.github.io/raw/master/images/Nuclear/capacitor_factor.png" /></div>
 
 The thermal efficiency of a coal powered electric car is 55%, which is already 4 times as efficient as a car powered on gasoline. 1 gallon of gas equates to 33.7 kWh of energy, and usually on 1 gallon of gas you can go about 25-30 miles, when in an electric car that can be as high as 135 MPGe. That's why it is 4x as efficient.
 
