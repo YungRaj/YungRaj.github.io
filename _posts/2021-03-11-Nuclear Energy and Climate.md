@@ -26,6 +26,34 @@ A fusion reaction between Tritium and Deuterium releases 17.6 mega electron volt
 
 There is a way to use isotopes of Lithium to produce Tritium, but the period of time that we can make of use of these methods is still temporary. Basically in conclusion, if we would like to use the methods of the Sun to produce energy, there are steep hills to climb and deadlines that we have to satisfy, and I just pray to God we have enough time left.
 
+## Nuclear Security
+
+As a Security Researcher, one fundamental component of Nuclear Energy that serves my interest is the protection of Nuclear facilities. When we perform the migrations to Nuclear energy, society must aim to protect itself from the harmful effects of radiation and from intruders that aim to break into facilities and be harmful.
+
+Nuclear Security aims to prevent, detect and respond to acts that are intended to bring the harmful effects of radiation to the environment, property, and society as a whole as well as protect facilities and other materials involved in fission and fusion. This involves work that provide outlines to deal with the risks of radiation from typical usage and prevent incidents where the radiation could be exposed to the rest of the world as well as design systems that provide countermeasures against attacks.
+
+Situation where the radiation is in the vicinity of human activity is when the Nuclear waste is transported from one facility to a site where they are stored underground. Nuclear facilities themselves must be secured and locked down so that malicious entities may not enter the facility and do dangerous things that would threaten the normal lives of people. Cyber threats and new technologies could be used in attacks, and thus broadens the subject of Nuclear Security to something I'm personally well acquainted with.
+
+Here is a short description of the different topics of Nuclear Security from the energy.gov website.
+
+"Protective forces are measures taken within facilities to make sure that intruders and other dangerous entities are not successful in penetrating the bounds of the facilities so that they can do dangerous things that would cause harm to society.
+
+Physical Security Systems include intrusion detection and assessment systems, access control mechanisms, barrier and delay mechanisms, tactical systems, etc
+
+Information Security includes classification guidance, technical surveillance, operations security and classified matter and control
+
+Personal Security involves access authorization, badging programs, Human Reliability Programs, and control of classified matter protection
+
+Materials Control and Accountability involves special and alternate Nuclear materials through measurements, QA, accounting containment, surveillance and physical inventory"
+
+Physical protection of facilities and/or nuclear material at fixed sites and during transportation as well as material control and accounting becomes a high priority if we would like to make the move to Nuclear successful.
+
+Sensitive and classified information such as the transportation and storage of safeguarded materials such as Nuclear Waste is crucial to preventing others from knowing the locations of safeguarded materials as well as schedules of them being transported across the country. 
+
+Transportation of radioactive byproduct material occurs because these byproducts are used by the medical industries to treat patients in diagnostic and therapeutic procedures. In addition the materials are used by the oil, electrical and construction industries for technology research and development.
+
+As the world becomes more dependent on computers and technology, we must be aware that the impacts of cybersecurity in various ways make it crucial for the country to be equipped in defense and security so that we can be accountable in operating nuclear facilities and transporting materials without risk or with assured confidence that we can continously carry out these processes and detect intruders and malicious entities attempting attacks.
+
 ## Car Recycling
 
 ![car_recycling](https://github.com/YungRaj/YungRaj.github.io/raw/master/images/Nuclear/car_recycling.jpg)
