@@ -32,7 +32,9 @@ As a Security Researcher, one fundamental component of Nuclear Energy that serve
 
 Nuclear Security aims to prevent, detect and respond to acts that are intended to bring the harmful effects of radiation to the environment, property, and society as a whole as well as protect facilities and other materials involved in fission and fusion. This involves work that provide outlines to deal with the risks of radiation from typical usage and prevent incidents where the radiation could be exposed to the rest of the world as well as design systems that provide countermeasures against attacks.
 
-Situation where the radiation is in the vicinity of human activity is when the Nuclear waste is transported from one facility to a site where they are stored underground. Nuclear facilities themselves must be secured and locked down so that malicious entities may not enter the facility and do dangerous things that would threaten the normal lives of people. Cyber threats and new technologies could be used in attacks, and thus broadens the subject of Nuclear Security to something I'm personally well acquainted with.
+![nuclear_security](https://github.com/YungRaj/YungRaj.github.io/raw/master/images/Nuclear/nuclear_security.png)
+
+Situations where the radiation is in the vicinity of human activity are when the Nuclear waste is transported from one facility to a site where they are stored underground. Nuclear facilities themselves must be secured and locked down so that malicious entities may not enter the facility and do dangerous things that would threaten the normal lives of people. Cyber threats and new technologies could be used in attacks, and thus broadens the subject of Nuclear Security to something I'm personally well acquainted with.
 
 Here is a short description of the different topics of Nuclear Security from the energy.gov website.
 
