@@ -87,3 +87,13 @@ https://www.iter.org/newsline/167/631
 https://www.waterfiltershop.co.uk/blog/deuterium-depleted-water-matters-drink/
 
 https://www.energy.gov/ne/articles/4-key-benefits-advanced-small-modular-reactors
+
+https://www.nrc.gov/security.html
+
+https://www.energy.gov/nnsa/nnsa-offices/defense-nuclear-security
+
+https://www.iaea.org/topics/security
+
+https://www.nti.org/about/projects/nuclear-security-project/
+
+https://www.stimson.org/program/nuclear-security/
