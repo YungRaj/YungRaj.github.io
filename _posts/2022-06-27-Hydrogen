@@ -1,0 +1,204 @@
+---
+layout: post
+title:  "Decarbonizing Fossil Fuels via Production of Hydrogen through Pyrolysis"
+date:   2022-08-21 12:00:00
+categories: blog
+---
+
+## Hydrogen Energy
+
+Grey Hydrogen
+Green Hydrogen is a hydrogen production method using fossil fuels in a way that releases CO2 in the atmosphere in a dirtier way than other methods of hydrogen production. An example includes using Steam Methane Reforming via natural gas, which releases CO2 in larger amounts. Unfortunately 95% of hydrogen produced in the world comes from SMR reforming. However, since the Hydrogen is consumed at a higher efficiency rate than gasoline and diesel is consumed. This is still preferable when you think about cars in transport.
+
+Blue Hydrogen
+Blue Hydrogen is a hydrogen production that meets the low carbon threshold but is generated using non-renewable energy sources, for example Nuclear Energy. Nuclear Energy has the potential to be non-renewable, but since it isn’t as commonly used as other methods of energy production it falls under this category. This method of hydrogen production includes energy production via nuclear energy and electrolysis of H2O at high efficiencies.
+
+Green Hydrogen
+Green Hydrogen is a hydrogen production method that meets the low carbon threshold but is generated using renewable energy sources such as solar and wind energy. The energy is produced using wind and solar energy and then electrolysis of H2O is performed at high efficiencies.
+
+Turquoise Hydrogen
+Turquoise Hydrogen is a hydrogen production method that meets the low carbon threshold but is generated with partially renewable resources. In this case, pyrolysis meets the criteria for turquoise hydrogen because it produces no CO2 and hydrogen sustainably. To turn hydrogen produced through pyrolysis into something 100% renewable, we must be able to sustainably be able to produce fossil hydrocarbons, which we might be able to if we harness the power of methanogenic bacteria and methane capture through cows.
+
+Other Color Hydrogen (Pink, Yellow, White, Black and Brown)
+Many other colors are assigned for the different kinds of hydrogen productions that are available to use, including pink, yellow, white, black and brown. This includes more ways to produce energy needed to split water through electrolysis, such as other kinds of renewable energy and fuel resources such as coal, which specifically is an extremely dirty way to produce hydrogen. Generally we want to focus on Green and Blue because this offers us the least carbon emissions in the production of hydrogen. This is why pyrolysis is so useful to us because it can replace the fossil fuel methods of producing energy and thus hydrogen by producing hydrogen directly from the resource and removing the carbon bonds that would form CO2 otherwise if burned directly.
+
+## Dispelling Criticisms of Hydrogen Energy
+
+Skepticism against hydrogen has been proposed by the public due to narratives about its lack of safety being suggested, even though much of that is untrue. To dispel any irresponsible misinformation about the safety hazards of hydrogen, here are some side to side comparisons between hydrogen, natural gas, gasoline and diesel fuels being used. The main problems are a consequence of the world being so used to the way the world currently operates that anything inconsistent with the normal way of doing things will seem gimmicky or fraudulent.
+
+First off, one of the oil and natural gas pipelines in the Gulf of Mexico recently bursted and the fossil fuels they were trying to drill beneath the ocean rose to the surface and caught fire. It was an extremely horrific scene to watch even from afar and shows the lack of safety that already exists with combustible vapors in the form of fossil hydrocarbons. The purpose of this section is to explain the advantages and disadvantages of hydrogen energy from a safety standpoint and to suggest that it is safer and that any possible safety or health concerns with hydrogen energy are safety concerns that already exist with fossil fuels.
+
+Of course, the first advantage of hydrogen fuel over other fuels is that it doesn’t produce any carbon emissions whatsoever if the production of hydrogen is carbon neutral. Additionally, hydrogen is not a toxic fuel that contains toxic substances or powerful carcinogens. A hydrogen leak or spill will not contaminate the environment or threaten the health of humans or wildlife. This is not the case for fossil fuels such as gasoline and diesel because many oil spills in the past have directly impacted the surrounding environments in the ocean and the wildlife.
+
+Hydrogen is 14 times lighter than air and 57 times lighter than gasoline vapor, which means that if released, hydrogen will rise and disperse rapidly, greatly reducing the risk of ignition at the ground level. Propane and gasoline vapor are heavier than air, greatly increasing the likelihood that they will remain on the ground level, increasing the risk of fires spreading and harming human life on the surface.
+
+Hydrogen has a lower radiant heat than conventional gasoline, which means that the air around the flame of hydrogen is not nearly as hot as the air around gasoline flame. Therefore, the risk of hydrogen secondary fires is lower.
+
+Hydrogen has a higher oxygen requirement for explosion than fossil fuels. Hydrogen CAN be explosive in oxygen concentrations from 18 to 59 percent while gasoline can be explosive in oxygen concentrations as low as 1 to 3 percent.
+
+While hydrogen is much safer in comparison to fossil hydrocarbon fuels, it isn’t free from potential dangers. Gas safety issues that hydrogen operators need to be aware of are the wide explosive ranges of hydrogen, the invisible flames that come with burning hydrogen, and the inability to smell, see, or taste hydrogen in the surrounding areas. When leaks occur, our hydrogen systems must deploy onboard leak detection systems, ventilation systems to prevent leaks from reaching flammable levels or ignition, fire detection via smoke detectors or heat detectors and pressure relief devices that vent our hydrogen systems.
+
+Use Hydrogen Fuel Cell to generate electricity with water as output
+
+Use Hydrogen in a gas turbine plant to burn Hydrogen using Oxygen at around 60% efficiency. NOx and SOx will need to scrubbed using catalytic conversion
+
+Use Hydrogen in cargo ships, trains, planes, buses, etc as a way to power transport at much higher efficiencies without carbon emissions
+Glass is manufactured using a tin bath upon which the glass in molten form is deposited, creating a flat smooth surface. To prevent oxidation, the tin bath is provided with a positive pressure consisting of nitrogen and hydrogen
+Hydrogen is used as a coolant in electric generating equipment because its low viscosity and high heat caacity
+Semiconductor production uses hydrogen for manufacturing, sintering, packaging and wafer annealing because of its reducing or oxygen scavenging properties
+Ammonia Production via the Haber-Bosch process uses hydrogen to produce ammonia in large amounts, which is used in crop production, fertilization, etc.
+1/2N2 (g) + 3/2H2 (g) ↔ NH3
+The yield for this reaction is increased using an iron catalyst and increasing reaction pressure
+Ammonia can also be used as a fuel source for transport in cars, although unlikely
+
+
+Use Cases of Carbon Product
+Sell to cement factory, brick factory, carbon pellets producer or carbon black mill
+Put back into coal sites, landfills, or combined with heavy metals to improve soil quality
+Graphite
+Rubber products such as car tires, belts, hoses, gaskets, diaphragms, vibration isolation devices, bushings, air springs, chassis bumpers, multiple types of pads, boots, wiper blades, fascia, conveyor wheels, and grommets
+Shields from UV rays and prevents plastic aging
+Pigments for printing inks and paints
+If anyone is dissatisfied with the endless supply of carbon, it is perfectly fine to store it in the ground. There is absolutely no danger to storing Carbon underground unlike the way it would be hazardous to perform Carbon Dioxide sequestration underground
+
+Catalysts
+
+In this section, we will be describing the different types of catalysts we can use for our reactors and why they are beneficial for use in a practical commercial system. Notably, one of the main ones we can use are the byproducts of our reactions.
+
+From sources online covering pyrolysis, the initial visions from people researching and developing the technologies for pyrolysis begin with using an iron blast furnace, where iron ore, coke and limestone are fed into the top of the furnace and molten iron and slag so produce sink and are separated at the bottom of the furnace. Then methane is fed into the bottom of a high temperature reactor filled with molten metal such as Pb or a molten metal allowing NiBi and gaseous hydrogen. The carbon formed floats to the top of the melt, siphoned off and placed into a storage tank. The hydrogen will then be cooled and stored for use as fuel.
+
+This seems to be a great starting point, but there an infinite quantity of materials that we can use and we just have to be careful and experimental in how they interact and interplay with each other in a way that maximizes the efficiency of the reactor, lowers the requires activation energy temperatures, and then maximally increases the desired byproduct quantities.
+
+If we don’t have external electrical energy supplying heat via renewable, solar or nuclear energy, then what we do is use about 15% of the hydrogen byproduct to reheat the reactor. A big concern has been mentioned about the infinite amount of carbon that is going to be produced, so a solution for that is to use the extra carbon for a reaction with carbon dioxide at 1150C to produce CO, which is much less harmful to the environment than CO2.
+
+C + CO2 → 2CO
+
+The reaction has an endothermic penalty of 172.6 kJ per mole, which could then be provided by renewable energy somehow. This reaction reminds me of the electrochemical reduction (electrolysis) of CO2 reaction, which can be used in practice where sequestration CO2 can be electrolyzed to form Carbon and/or Carbon Monoxide. More information can be found here.
+
+
+Carbon Black
+
+Carbon Black is a reasonably decent catalyst for our reaction because it is the byproduct of pyrolysis! For our reaction to work best, we want to have a catalyst that is commonly available, and this is a great option because we will have an extremely high quantity during the course of operating reactors long term. Activated Carbon will be a better option with respect to all our feedstocks that we will act on because the H2 selectivity is higher.
+
+In addition, any excess carbon black produced, which we will have in extremely large amounts, will be sold to invested parties for use in many industrial applications, for example for the production of car tires, graphite, graphene, synthetic diamonds, etc.
+
+Activated Carbon
+
+Activated Carbon is a brilliant catalyst for the reaction because the byproducts of pyrolysis are carbon, and in this case for us to make use of this catalyst, we would need to add an activating agent in our reactor to create activated carbon, and that increases the H2 selectivity of higher hydrocarbons to a much larger percentage in comparison to normal carbon by lowering the activation energy needed to break down all C-H bonds in our feedstock.
+
+The way activated carbon is produced by impregnating carbon with certain chemicals. The chemicals are usually acid + a strong base, or a salt. The carbon is then subjected to lower temperatures (250C to 600C). It is believed that this particular temperature range activates the carbon by forcing the carbon material to open up and have more microscopic pores. There is also physical activation of carbon, but chemical activation is preferred due to the lower temperatures involved, consistency, and shorter times needed to activate the carbon.
+
+We will need to carefully design an activating agent inside our future pyrolysis reactors that best produces activated carbon, which is the most important catalyst for our reactions, that highly increases the H2 selectivity at different temperatures.
+
+Types of Activated Carbon
+
+Powdered AC - activated carbon in powdered form where the granules are less than 1mm in size with average diameters of 0.15mm and 0.25mm. They are characterized by large surface area to volume ratios.
+
+Granular AC - relatively larger particle size compared to powdered AC
+
+Extruded AC - “combines powdered activated carbon with a binder, which are fused together and extruded into a cylindrical shaped activated carbon block with diameters from 0.8 to 130 mm. used in gas phase applications because of low pressure drop, high mechanical strength and low dust content”
+
+Bead AC - made from petroleum pitch and supplied in diameters from 0.35mm to 0.80mm. Similar to EAC, but with smaller grain size.
+
+Acetylene
+Acetylene, also known as C2H2, according to Wikipedia, “is used in methane and hydrogen storage, air purification, solvent recovery, decaffeination, gold purification, metal extraction, water purification, medicine, sewage treatment, air filters in respirators, filters in compressed air, teeth whitening, production of hydrogen chloride and many other applications.” It is a good catalyst for our reaction because it is one of the lowest hydrocarbons which might or might not be a byproduct of our reaction. It can increase H2 selectivity for varying feedstock. We can use this catalyst in a combination with other catalysts such as carbon to improve the reaction. 
+
+This is a great candidate to use in combination with other catalysts in our DWSIM simulation to figure out what the most optimal conditions for our reactor are to produce the most amount of Hydrogen.
+
+Molten Gallium
+
+In this article, the goal of the reactor is to use liquid metal in a bubbly form to catalyze the pyrolysis reaction for methane. Gallium is chosen because of its low melting point @ 29.7 degrees C. It may present catalytic properties in pyrolysis. A maximum methane conversion of 91% was achieved in a 50-50% Ar CH4 mixture with an average reactor temperature of 1119 C, where gallium made up 43% of the reactor volume.
+
+The article also mentions the use of cheaper metals such a Bi and Al to compare with gallium used as a catalyst for the reaction. Nickel powder might be used to improve conversion at lower temperatures. The key idea here is that molten metals are cheap, so using them is a great idea in a high pressure and temperature reactor. Since activated carbon is a great candidate for catalytic conversion to hydrogen, we want to try to experiment with a combination of optimal secondary catalysts such as these in parallel with activated carbon to optimize our reactors.
+
+
+Molten Alkali Chloride Salts
+https://pubs.acs.org/doi/10.1021/acscatal.0c01262
+
+In this whitepaper, the addition of 3% by weight Iron Chloride FeCl3 to a eutectic molten salt mixture NaCl-KCl increased activity of the melt for methane pyrolysis. The activation energy for pyrolysis decreased from 301 kJ/mol to 171 kJ/mol. Pyrolysis in the Fe/NaKCl mixture produces carbon with a sheet-like graphitic structure. 
+
+Notes
+We need to look more into these various kinds of alkali salts materials used in molten salt mixtures to catalyze the reaction. It also looks like the reaction products get mixed into the reactor catalysts, etc and separating them properly gets tricky. Goal here is to find a combination of catalysts that would minimize reaction activation energy to convert to H2 and minimize issues with mixing and separating byproducts, reactants and catalysts.
+
+It looks like these materials also manipulate the shape of carbon to convert to other carbon based products such as graphite. We will need to predictively measure if there is a need for such a thing in people invested in purchasing our carbon byproducts and how we can optimize a reactor to produce predefined quantities of what we want.
+
+IMPORTANT NOTE - article mentions the different isotopes of hydrogen inside of the methane feedstock, but the descriptions aren’t easy to understand
+
+Molten Metals
+
+In the beginning of this writeup, it mentions the use of carbon nanofibers as catalysts for pyrolysis, one of them being a nickel-loaded activated carbon. We need to inspect more into the use cases of these different modifications to activated carbons and how to produce them on the fly in a reactor meaningfully to further catalyze future reactions. We must be careful in designing a reactor where coking and molar flow of reactant, reagent, and product exist without problems.
+
+Molten tin was found to not be catalytic in the pyrolysis reaction.
+
+They achieved 99% conversion at higher temperatures 1500C with no catalytic activity of metal in a bubble reactor. The purpose of the molten metal here is to facilitate heat transfer and carbon removal as a liquid and solid as well as to separate it.
+
+Methane conversation rates are important to the success of the economic viability of pyrolysis. At lower conversions, the cost of pressure swing absorption and the increased cost of heating recycled methane brings up the costs. If conversion rates are low, we can still use hydrogen in a turbine for power generation and any left methane or fossil hydrocarbons can be used in combustion too, and although carbon dioxide is emitted in trace amounts, the amount released is so low that it still achieves our original purpose of decarbonization. One way to improve economics of catalytic pyrolysis is to achieve high conversion at temperatures no greater than 1000C.
+
+Economically, the total capital investment for high temperature electric arc-based pyrolysis was $772M for the 200 kilotons per annum facility @ $3.9/kg-y. For hydrogen used as fuel (144 MJ/kg), the facility can produce 914 MJ/sec and the capital basis can be expressed as $0.84/Watt. Using pyrolysis, hydrogen can be produced for $1.72/kg when natural gas is $3/MMBTU.
+
+A great idea here is to calculate the capital and operating costs of a smaller scale pyrolysis reactor placed at gas stations.
+
+## Addressing Problems
+
+Coking
+
+Coking is going to be an interesting problem to address in our pyrolysis reactors because it may impact performance of the reactor due to carbon deposits preventing molar flow of reacting agent and byproduct in various parts of the reactor. In addition, the issue of coking means that cleaning the reactor regularly is going to be a factor to be applied in operating costs of reactors on smaller and larger scales, depending on how they are deployed. Also, coking also can decrease catalytic activity of the catalysts we want to use in our reactor, so to increase performance of the reactor and possibly increase the lifetime of our equipment, we must highly minimize coking.
+
+Decoking is done in several ways, chemical cleaning, steam-air decoking, in-line spalling and mechanical pigging are the most common ways, each having their own advantages and disadvantages.
+
+Steam-air or thermal decoking is the mixture of steam, air and heat to cause shrinkage and cracking of the coke deposits. The steam and air mixture is passed through the coke and is heated internally. It may be necessary to dismantle the tubing used which is expensive and destructive.
+
+In-line spalling decoking involves high velocity steam, which is alternatively heated and cooled, delivering shocks to the coke deposits to create a contract and expanding effect to spall coke off the walls. It has less environmental issues as steam-air or thermal decoking but this method is not a full recoke, and thus requires other methods.
+
+Chemical cleaning consists of circulating a chemical cleaner, usually an acid through the process until the coke has been softened enough for removal. The tubes are flushed through with water to remove all possible coke deposits. The chemical use is not environmentally friendly so it must be disposed of carefully which will then also increase the costs of decoking this way.
+
+Mechanical coking is the most effective of removing coke from inner surfaces of furnaces and tubes. Mobile water pumping units are used to jet water against the coke lying on surfaces. For coking in pipes, other pumping units are used to propel studded pigs that move bidirectionally to remove coke deposits in a brush-like method. This can reduce damage to the tubes and furnaces where coke is lying on and is much more environmentally friendly. The studded pigs can also be used as inspection tools.
+
+Hydrogen Storage
+
+When we successfully produce hydrogen using pyrolysis, we have many options. If we are distributing hydrogen to customers seeking to refuel their FCEVs, then we must store the hydrogen. If they are trying to charge their EV, then we must directly burn the hydrogen to produce electricity that can be delivered to the nearest transformer and then be supplied to the customer. If we want to send the hydrogen elsewhere, it must also be stored. In the case of storing hydrogen, we have some challenges and problems to address. In regular conditions of pressure and temperature, hydrogen is not energy dense by volume. Even though it is energy dense by mass, hydrogen storage requires pressures of 10,000 PSI to store it in tanks in meaningful quantities.
+
+The Toyota Mirai fuel cell electric vehicle has a 7 kg hydrogen tank, each kg of hydrogen being able to store about 33 kilowatt hours of power, similar to a gallon of gasoline, with a fuel cell stack that operates at much higher efficiencies than an ICE. This is why we’ve seen the Mirai be able to reach the 1000 km range, which is about 625 miles, with a smaller quantity of hydrogen in kgs than a quantity of gasoline in gallons. It ships with 2 hydrogen tanks with a three layer structure, with the inner layer characterized by polymer liner made of plastic, the middle layer consisting of a carbon fiber reinforced polymer, and the surface layer made of fiberglass-reinforced polymer. 
+
+Seeking counsel with people who are experts in polymers and catalysis is appropriate here. 
+We might not use the same setup as the Mirai for hydrogen storage, but documenting it for future reference is a good idea.
+
+Supply Hydrogen by Demand
+
+An option that we have is to only operate the pyrolysis reactor on demand when customers need hydrogen and keep only a small amount of hydrogen available no matter how many customers are there at stations seeking to refuel. This reduces the requirement for storing hydrogen in high pressure containers and thus avoiding partial efficiency losses of hydrogen and eliminates risk for storing combustible vapor that is highly flammable if we are not careful. If storage becomes a concern with safety, we can always argue the high risk associated with gasoline and diesel storage, which are extremely combustible flammable materials, and similar if not more in risk to hydrogen.
+
+Hydrogen Storage Methods
+
+Hydrogen can be stored using countless materials. Here are some whitepapers describing the many ways that hydrogen can be stored in larger quantities.
+
+Compressed Hydrogen
+
+Compressed Hydrogen is a storage mechanism for hydrogen where hydrogen is kept under pressures to increase the storage density. Compressed hydrogen is stored in tanks at 350 bar, which is 5,000 psi, and 700 bar, which is 10,000 psi.
+
+Liquified Hydrogen
+
+Liquified Hydrogen is a storage mechanism for hydrogen where hydrogen is stored in liquid form at extremely low temperatures of -253 C, similar to liquified natural gas, close to absolute zero. Efficiency losses can be expected, where 12.79% of the energy is lost due to storing the hydrogen at that low of a temperature, about 4.26 kWh of the 33.3 kWh that is available when burning hydrogen. It has been documented that the original BMW Hydrogen 7, one of the original hydrogen vehicles that operated using an internal combustion engine.
+
+According to the conclusions made in these whitepapers regarding hydrogen storage, carbon and other carbon-based products seem to be the best materials that can be used to store hydrogen at these higher pressures. In fact, activated carbon fiber is a great fit for hydrogen storage, where, according to the whitepaper from the Journal of Hydrogen Energy, activation occurs using H2O and KOH. We will need an activating agent in our reactor design in order to produce an extremely useful catalyst for pyrolysis. Using the activated carbon to produce a material used in storage of hydrogen is a great candidate for that since we will have plenty of it available. Activated carbon is well known for its high surface area, which is great for the purpose of storing in larger volumes.
+
+In practicality, storing hydrogen in a compressed storage mechanism seems like the most realistic scenario for our future plans. With consideration to energy efficiencies and cost of storage, we want to minimally store hydrogen as much as possible so that we can maximize power output for energy production and then finally transport. This would also mean that supplying hydrogen on demand is a better option than trying to pump out hydrogen as much as possible.
+
+Hydrogen Pipelining
+
+Many critics of hydrogen energy complain that hydrogen pipelines are highly incapable of replacing natural gas and oil pipelines due to the physical and chemical properties of hydrogen being different, and thus will make the transition to hydrogen energy extremely difficult and unrealistic as well as energy intensive. This section is dedicated to partially dispelling these claims by arguing that hydrogen pipelines are for the most part unnecessary to begin with, but that hydrogen pipelines are not gonna be that difficult to plan and implement, if carried out correctly in ways where they are built only when needed or only when they serve an immediate benefit to consumers, distributors and the environment.
+
+Security
+
+Of course, Security is going to be an extremely important problem to solve since our planned infrastructure is going to be nationalized, shipped and distributed across the global market, and we must implement systems that are minimally interactive with remote network nodes and shipped with security in the RTOS’ and electrical systems that manage process control, etc that our hydrogen systems are dependent on.
+
+Fuel Cells
+
+It has been well documented that Hydrogen Fuel Cell stacks are extremely useful due to their high efficiencies at around 60%. These efficiencies can scale well in transport with cars and trucks, and even trains. Air planes are likely to be another useful application of using hydrogen in a fuel cell stack, but the weight of the hydrogen, the high pressure, etc pose huge challenges for using fuel cell stacks in such aerodynamic machines. 
+
+The main problems with fuel cell stacks is that they require platinum catalysts to ionize hydrogen, so that electrons and protons can be separated and additionally, scaling up fuel cell stacks to full industrial scale power generation is not exactly realistic.
+
+Hydrogen Turbines
+
+As stated before, in places like Japan, hundreds of fuel cell stacks are powered in parallel to increase power output. This isn’t always possible, and probably requires high capital and operating costs, so the next best possible alternative is spending time and money on improving and popularizing hydrogen turbines. Natural gas turbines in combined cycle and/or steam turbines have energy efficiencies of around ~60%, which is plenty efficient if we apply these technologies to hydrogen, especially if the hydrogen production methods are carbon negative.
+
+
